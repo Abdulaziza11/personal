@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abdulaziz | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0c0c0c;
+      --surface: #141414;
+      --border: #222;
+      --accent: #b9ff66;
+      --accent2: #ff6b6b;
+      --white: #f5f5f5;
+      --muted: #666;
+      --tag-bg: #1a1a1a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── LOADER ─── */
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: 4px;
+    }
+
+    .loader-text span {
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* ─── NAV ─── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      border-bottom: 1px solid transparent;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(12, 12, 12, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom-color: var(--border);
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .lang-toggle {
+      font-family: 'Space Mono', monospace;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle span {
+      width: 24px;
+      height: 1.5px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(4.5px, 4.5px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(4.5px, -4.5px);
+    }
+
+    /* ─── HERO ─── */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 5%;
+      gap: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-left {
+      padding-top: 80px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      padding: 0.4rem 0.9rem;
+      letter-spacing: 1px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-tag::before {
+      content: '●';
+      color: var(--accent);
+      font-size: 0.6rem;
+    }
+
+    .hero-left h1 {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-left h1 .name-accent {
+      color: var(--accent);
+    }
+
+    .hero-left p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #0c0c0c;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #d4ff8a;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      border: 1px solid var(--border);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--white);
+    }
+
+    /* Hero right - decorative code block */
+    .hero-right {
+      padding-top: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .code-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      width: 100%;
+      max-width: 420px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 2;
+    }
+
+    .code-card .cc-line {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .cc-num {
+      color: var(--border);
+      min-width: 1.5rem;
+      text-align: right;
+    }
+
+    .cc-keyword {
+      color: #c792ea;
+    }
+
+    .cc-var {
+      color: var(--accent);
+    }
+
+    .cc-str {
+      color: #ff8c69;
+    }
+
+    .cc-comment {
+      color: #444;
+    }
+
+    .cc-prop {
+      color: #89ddff;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 7rem 5%;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-heading {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 4rem;
+    }
+
+    .section-heading .accent {
+      color: var(--accent);
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image-wrap img {
+      width: 100%;
+      display: block;
+      filter: grayscale(30%) contrast(1.1);
+    }
+
+    .about-image-tag {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+    }
+
+    .about-text h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+
+    .stat-box {
+      background: var(--bg);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-box .num {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-box .lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── SKILLS ─── */
+    #skill {
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .skills-float-container {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Orbital ring */
+    .orbit-ring {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border: 1px dashed #2a2a2a;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: rotateSlow 30s linear infinite;
+    }
+
+    .orbit-ring-2 {
+      width: 260px;
+      height: 260px;
+      border-color: #1e1e1e;
+      animation-direction: reverse;
+      animation-duration: 20s;
+    }
+
+    @keyframes rotateSlow {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* Center core */
+    .skill-core {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-align: center;
+      background: var(--bg);
+      z-index: 2;
+    }
+
+    .skill-core::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(185, 255, 102, 0.12), transparent 70%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.5
+      }
+
+      50% {
+        transform: scale(1.15);
+        opacity: 1
+      }
+    }
+
+    /* Floating skill cards */
+    .skill-float {
+      position: absolute;
+      width: 170px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.3rem 1.1rem;
+      transition: border-color 0.3s, transform 0.3s;
+      z-index: 3;
+      cursor: default;
+    }
+
+    .skill-float:hover {
+      border-color: var(--accent);
+      transform: scale(1.07) !important;
+      z-index: 10;
+    }
+
+    /* positions: top, right, bottom, left */
+    .sf-top {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: floatY 6s ease-in-out infinite;
+    }
+
+    .sf-right {
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      animation: floatX 7s ease-in-out infinite 1s;
+    }
+
+    .sf-bottom {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: floatY 5s ease-in-out infinite 0.5s;
+    }
+
+    .sf-left {
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      animation: floatX 8s ease-in-out infinite 1.5s;
+    }
+
+    @keyframes floatY {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-12px);
+      }
+    }
+
+    @keyframes floatX {
+
+      0%,
+      100% {
+        transform: translateY(-50%) translateX(0);
+      }
+
+      50% {
+        transform: translateY(-50%) translateX(-10px);
+      }
+    }
+
+    .sf-right:hover {
+      transform: translateY(-50%) scale(1.07) !important;
+    }
+
+    .sf-left:hover {
+      transform: translateY(-50%) scale(1.07) !important;
+    }
+
+    .sf-top:hover {
+      transform: translateX(-50%) scale(1.07) !important;
+    }
+
+    .sf-bottom:hover {
+      transform: translateX(-50%) scale(1.07) !important;
+    }
+
+    .skill-float-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+
+    .skill-float h3 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-float p {
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    /* connector lines */
+    .skill-connectors {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ─── PORTFOLIO ─── */
+    #portfolio {
+      background: var(--surface);
+    }
+
+    .portfolio-scatter {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      transition: border-color 0.4s;
+    }
+
+    /* Odd items taller, even items normal — staggered rhythm */
+    .portfolio-item:nth-child(odd) {
+      aspect-ratio: 3/4;
+    }
+
+    .portfolio-item:nth-child(even) {
+      aspect-ratio: 4/3;
+      margin-top: 2.5rem;
+    }
+
+    /* Item 1: clip-path reveal on hover */
+    .portfolio-item:nth-child(1) {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .portfolio-item:nth-child(1):hover {
+      border-color: var(--accent);
+    }
+
+    /* Item 3: rotated label badge */
+    .portfolio-item:nth-child(3):hover {
+      border-color: var(--accent2);
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s;
+      filter: grayscale(80%) brightness(0.8);
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.08);
+      filter: grayscale(0%) brightness(1);
+    }
+
+    /* Sliding overlay from bottom */
+    .portfolio-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to top, rgba(12, 12, 12, 0.97) 60%, transparent);
+      padding: 2rem 1.5rem 1.5rem;
+      transform: translateY(60%);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .portfolio-item:hover .portfolio-overlay {
+      transform: translateY(0);
+    }
+
+    /* Corner index tag */
+    .portfolio-index {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      background: rgba(12, 12, 12, 0.7);
+      padding: 0.3rem 0.6rem;
+      letter-spacing: 1px;
+      backdrop-filter: blur(4px);
+      z-index: 5;
+      transition: color 0.3s;
+    }
+
+    .portfolio-item:hover .portfolio-index {
+      color: var(--accent);
+    }
+
+    /* Tech tag */
+    .p-tech {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      border: 1px solid rgba(185, 255, 102, 0.3);
+      padding: 0.2rem 0.5rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+
+    .portfolio-item:nth-child(3) .p-tech {
+      color: var(--accent2);
+      border-color: rgba(255, 107, 107, 0.3);
+    }
+
+    .portfolio-overlay h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.3px;
+    }
+
+    .portfolio-overlay p {
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .view-btn {
+      display: inline-block;
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+
+    .view-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .portfolio-item:nth-child(3) .view-btn {
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    .portfolio-item:nth-child(3) .view-btn:hover {
+      background: var(--accent2);
+      color: var(--bg);
+    }
+
+    /* ─── SERVICES ─── */
+    #service {
+      background: var(--surface);
+    }
+
+    .services-list {
+      max-width: 900px;
+    }
+
+    .service-item {
+      display: grid;
+      grid-template-columns: 4rem 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .service-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .service-item:hover .s-title {
+      color: var(--accent);
+    }
+
+    .s-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .s-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      transition: color 0.2s;
+    }
+
+    .s-desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+    }
+
+    .s-arrow {
+      color: var(--muted);
+      font-size: 1.5rem;
+      transition: all 0.2s;
+    }
+
+    .service-item:hover .s-arrow {
+      color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-big {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-big span {
+      color: var(--accent);
+    }
+
+    .contact-inner>p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .c-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.4rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .c-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .c-link i {
+      font-size: 1rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 1.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: 'Space Mono', monospace;
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+
+    /* ─── SCROLL DOWN ─── */
+    .scroll-down {
+      position: absolute;
+      bottom: 2rem;
+      left: 5%;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .scroll-down a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .scroll-down a:hover {
+      color: var(--accent);
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+
+      0%,
+      100% {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      50% {
+        transform: scaleX(1.5);
+      }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-left {
+      animation: fadeIn 0.8s ease;
+    }
+
+    .hero-right {
+      animation: fadeIn 0.8s ease 0.2s both;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      #home {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-scatter {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-item:nth-child(odd),
+      .portfolio-item:nth-child(even) {
+        aspect-ratio: 4/3;
+        margin-top: 0;
+      }
+
+      .skills-float-container {
+        min-height: auto;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .orbit-ring,
+      .orbit-ring-2,
+      .skill-core,
+      .skill-connectors {
+        display: none;
+      }
+
+      .skill-float {
+        position: static;
+        width: 100%;
+        animation: none;
+        transform: none !important;
+      }
+
+      .sf-top,
+      .sf-right,
+      .sf-bottom,
+      .sf-left {
+        position: static;
+        transform: none;
+        animation: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(12, 12, 12, 0.98);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        align-items: center;
+        display: none;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .lang-toggle {
+        position: absolute;
+        top: 1.2rem;
+        right: 4rem;
+      }
+
+      .service-item {
+        grid-template-columns: 3rem 1fr;
+      }
+
+      .s-arrow {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADER -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader-text">A.DEV<span>_</span></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="#home" class="logo">A.DEV</a>
+    <ul class="nav-links" aria-label="Main navigation">
+      <li><a href="#home" data-lang="nav_home">Home</a></li>
+      <li><a href="#about" data-lang="nav_about">About</a></li>
+      <li><a href="#skill" data-lang="nav_skill">Skills</a></li>
+      <li><a href="#portfolio" data-lang="nav_portfolio">Portfolio</a></li>
+      <li><a href="#service" data-lang="nav_service">Services</a></li>
+      <li><a href="#contact" data-lang="nav_contact">Contact</a></li>
+    </ul>
+    <button class="lang-toggle" aria-label="Toggle language">EN | UZ</button>
+    <div class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" style="position:relative;">
+    <div class="hero-left">
+      <div class="hero-tag" data-lang="hero_tag">Available for work</div>
+      <h1>
+        Abdulaziz<br>
+        <span class="name-accent">Abdusattorov</span>
+      </h1>
+      <p data-lang="hero_desc">Creative Developer & Designer crafting premium digital experiences with clean,
+        minimalistic designs.</p>
+      <div class="hero-buttons">
+        <a href="#portfolio" class="btn-primary" data-lang="hero_cta">View My Work</a>
+        <a href="#contact" class="btn-secondary" data-lang="hero_contact_btn">Get In Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="code-card">
+        <div class="cc-line"><span class="cc-num">1</span><span class="cc-comment">// abdulaziz.dev</span></div>
+        <div class="cc-line"><span class="cc-num">2</span></div>
+        <div class="cc-line"><span class="cc-num">3</span><span><span class="cc-keyword">const</span> <span
+              class="cc-var">dev</span> = {</span></div>
+        <div class="cc-line"><span class="cc-num">4</span><span>&nbsp;&nbsp;<span class="cc-prop">name</span>: <span
+              class="cc-str">"Abdulaziz"</span>,</span></div>
+        <div class="cc-line"><span class="cc-num">5</span><span>&nbsp;&nbsp;<span class="cc-prop">role</span>: <span
+              class="cc-str">"Developer"</span>,</span></div>
+        <div class="cc-line"><span class="cc-num">6</span><span>&nbsp;&nbsp;<span class="cc-prop">focus</span>: <span
+              class="cc-str">"UI/UX + Code"</span>,</span></div>
+        <div class="cc-line"><span class="cc-num">7</span><span>&nbsp;&nbsp;<span class="cc-prop">exp</span>: <span
+              class="cc-str">"2+ years"</span>,</span></div>
+        <div class="cc-line"><span class="cc-num">8</span><span>&nbsp;&nbsp;<span class="cc-prop">projects</span>: <span
+              class="cc-var">15</span>,</span></div>
+        <div class="cc-line"><span class="cc-num">9</span><span>&nbsp;&nbsp;<span class="cc-prop">status</span>: <span
+              class="cc-var">available</span>,</span></div>
+        <div class="cc-line"><span class="cc-num">10</span><span>};</span></div>
+        <div class="cc-line"><span class="cc-num">11</span></div>
+        <div class="cc-line"><span class="cc-num">12</span><span><span class="cc-keyword">export default</span> <span
+              class="cc-var">dev</span>;</span></div>
+      </div>
+    </div>
+
+    <div class="scroll-down">
+      <a href="#about"><span class="scroll-line"></span> SCROLL</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">01 — About</div>
+    <h2 class="section-heading" data-lang="about_title">About <span class="accent">Me</span></h2>
+    <div class="about-grid">
+      <div class="about-image-wrap">
+        <img src="image.png" alt="Abdulaziz">
+        <div class="about-image-tag">@abdulaziz.dev</div>
+      </div>
+      <div class="about-text">
+        <h3 data-lang="about_heading">I'm a Passionate Developer</h3>
+        <p data-lang="about_desc1">I create elegant, minimalistic, and premium digital solutions. With a focus on clean
+          design and seamless user experiences, I bring ideas to life through code.</p>
+        <p data-lang="about_desc2">Specializing in modern web technologies, I deliver high-quality projects that exceed
+          expectations.</p>
+        <div class="stats-row">
+          <div class="stat-box">
+            <span class="num">2+</span>
+            <div class="lbl" data-lang="stat_exp">Years Experience</div>
+          </div>
+          <div class="stat-box">
+            <span class="num">15+</span>
+            <div class="lbl" data-lang="stat_projects">Projects</div>
+          </div>
+          <div class="stat-box">
+            <span class="num">10+</span>
+            <div class="lbl" data-lang="stat_clients">Clients</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skill">
+    <div class="section-label">02 — Skills</div>
+    <h2 class="section-heading" data-lang="skill_title">My <span class="accent">Skills</span></h2>
+
+    <div class="skills-float-container">
+      <!-- Orbit rings -->
+      <div class="orbit-ring"></div>
+      <div class="orbit-ring orbit-ring-2"></div>
+
+      <!-- SVG connector lines -->
+      <svg class="skill-connectors" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <line x1="400" y1="240" x2="400" y2="60" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4 6" />
+        <line x1="400" y1="240" x2="640" y2="240" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4 6" />
+        <line x1="400" y1="240" x2="400" y2="420" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4 6" />
+        <line x1="400" y1="240" x2="160" y2="240" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4 6" />
+      </svg>
+
+      <!-- Core -->
+      <div class="skill-core">SKILLS<br>CORE</div>
+
+      <!-- Cards -->
+      <div class="skill-float sf-top">
+        <span class="skill-float-icon">💻</span>
+        <h3 data-lang="skill_web">Web Development</h3>
+        <p data-lang="skill_web_desc">Building fast, responsive websites with modern technologies.</p>
+      </div>
+      <div class="skill-float sf-right">
+        <span class="skill-float-icon">🎨</span>
+        <h3 data-lang="skill_uiux">UI/UX Design</h3>
+        <p data-lang="skill_uiux_desc">Creating intuitive and beautiful user interfaces.</p>
+      </div>
+      <div class="skill-float sf-bottom">
+        <span class="skill-float-icon">🤖</span>
+        <h3 data-lang="skill_mobile">Telegram Bot</h3>
+        <p data-lang="skill_mobile_desc">Building smart, automated bots for Telegram with custom features.</p>
+      </div>
+      <div class="skill-float sf-left">
+        <span class="skill-float-icon">⚡</span>
+        <h3 data-lang="skill_perf">Performance</h3>
+        <p data-lang="skill_perf_desc">Optimizing code for maximum speed and efficiency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="section-label">03 — Work</div>
+    <h2 class="section-heading" data-lang="portfolio_title">Selected <span class="accent">Projects</span></h2>
+    <div class="portfolio-scatter">
+
+      <div class="portfolio-item">
+        <div class="portfolio-index">01 / 04</div>
+        <img src="iCEREAM.png" alt="Ice cream store">
+        <div class="portfolio-overlay">
+          <span class="p-tech">HTML · CSS</span>
+          <h3>Ice cream store</h3>
+          <p>Frontend Web Development</p>
+          <a href="https://abdulaziza11.github.io/first-project/" class="view-btn" target="_blank">View Project ↗</a>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="portfolio-index">02 / 04</div>
+        <img src="BARABERSHIOP.webp"
+          alt="Ice Cream Store">
+        <div class="portfolio-overlay">
+          <span class="p-tech">HTML · CSS · JS</span>
+          <h3>Premium Barber Shop</h3>
+          <p>Frontend Development</p>
+          <a href="https://abdulaziza11.github.io/basra/" class="view-btn" target="_blank">View Project ↗</a>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="portfolio-index">03 / 04</div>
+        <img src="FLOWERS.webp" alt="Flower shop">
+        <div class="portfolio-overlay">
+          <span class="p-tech">HTML CSS</span>
+          <h3>Flower shop</h3>
+          <p>Web Development</p>
+          <a href="https://abdulaziza11.github.io/Flowers-/" class="view-btn">View Project ↗</a>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="portfolio-index">04 / 04</div>
+        <img src="VOLTIX.webp"
+          alt="Design System">
+        <div class="portfolio-overlay">
+          <span class="p-tech">HTML CSS JS</span>
+          <h3>Voltix Energetic Drink</h3>
+          <p>Web Development</p>
+          <a href="https://abdulaziza11.github.io/voltex/" class="view-btn">View Project ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="service">
+    <div class="section-label">04 — Services</div>
+    <h2 class="section-heading" data-lang="service_title">What I <span class="accent">Do</span></h2>
+    <div class="services-list">
+      <div class="service-item">
+        <span class="s-num">01</span>
+        <div>
+          <div class="s-title" data-lang="service_web">Web Development</div>
+          <div class="s-desc" data-lang="service_web_desc">Custom websites and web applications built with the latest
+            technologies.</div>
+        </div>
+        <span class="s-arrow">→</span>
+      </div>
+      <div class="service-item">
+        <span class="s-num">02</span>
+        <div>
+          <div class="s-title" data-lang="service_uiux">UI/UX Design</div>
+          <div class="s-desc" data-lang="service_uiux_desc">User-centered design combining aesthetics with
+            functionality.</div>
+        </div>
+        <span class="s-arrow">→</span>
+      </div>
+      <div class="service-item">
+        <span class="s-num">03</span>
+        <div>
+          <div class="s-title" data-lang="service_consult">Consulting</div>
+          <div class="s-desc" data-lang="service_consult_desc">Technical advice to improve your digital products and
+            strategies.</div>
+        </div>
+        <span class="s-arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label">05 — Contact</div>
+      <div class="contact-big">
+        Let's <span>Build</span><br>Together.
+      </div>
+      <p data-lang="contact_desc">Have a project in mind or want to collaborate? Feel free to reach out — let's create
+        something amazing together.</p>
+      <a href="mailto:hello@abdulaziz.com" class="btn-primary" data-lang="contact_btn">Contact Me</a>
+      <div class="contact-links">
+        <a href="tel:+998916690321" class="c-link"><i class="fa-solid fa-phone"></i> Phone</a>
+        <a href="https://t.me/Dev9010" class="c-link"><i class="fa-brands fa-telegram"></i> Telegram</a>
+        <a href="https://www.instagram.com/new1.dev/" class="c-link"><i class="fa-brands fa-instagram"></i>
+          Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>Abdulaziz</span>. All rights reserved.</p>
+    <p style="font-size:0.7rem; color: var(--muted);">Built with ❤️</p>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        nav_home: 'Home', nav_about: 'About', nav_skill: 'Skills',
+        nav_portfolio: 'Portfolio', nav_service: 'Services', nav_contact: 'Contact',
+        hero_tag: 'Available for work',
+        hero_desc: 'Creative Developer & Designer crafting premium digital experiences with clean, minimalistic designs.',
+        hero_cta: 'View My Work', hero_contact_btn: 'Get In Touch',
+        about_title: 'About Me', about_heading: "I'm a Passionate Developer",
+        about_desc1: 'I create elegant, minimalistic, and premium digital solutions. With a focus on clean design and seamless user experiences, I bring ideas to life through code.',
+        about_desc2: 'Specializing in modern web technologies, I deliver high-quality projects that exceed expectations.',
+        stat_exp: 'Years Experience', stat_projects: 'Projects', stat_clients: 'Clients',
+        skill_title: 'My Skills', skill_web: 'Web Development',
+        skill_web_desc: 'Building fast, responsive websites with modern technologies.',
+        skill_uiux: 'UI/UX Design', skill_uiux_desc: 'Creating intuitive and beautiful user interfaces.',
+        skill_mobile: 'Telegram Bot', skill_mobile_desc: 'Building smart, automated bots for Telegram with custom features.',
+        skill_perf: 'Performance', skill_perf_desc: 'Optimizing code for maximum speed and efficiency.',
+        portfolio_title: 'Selected Projects',
+        service_title: 'What I Do',
+        service_web: 'Web Development', service_web_desc: 'Custom websites and web applications built with the latest technologies.',
+        service_uiux: 'UI/UX Design', service_uiux_desc: 'User-centered design combining aesthetics with functionality.',
+        service_consult: 'Consulting', service_consult_desc: 'Technical advice to improve your digital products and strategies.',
+        contact_desc: "Have a project in mind or want to collaborate? Feel free to reach out — let's create something amazing together.",
+        contact_btn: 'Contact Me',
+      },
+      uz: {
+        nav_home: 'Bosh Sahifa', nav_about: 'Men Haqimda', nav_skill: "Ko'nikmalar",
+        nav_portfolio: 'Portfolio', nav_service: 'Xizmatlar', nav_contact: "Bog'lanish",
+        hero_tag: 'Ish uchun tayyorman',
+        hero_desc: "Ijodiy dasturchi va dizayner. Zamonaviy, toza va minimalistik dizayn orqali premium raqamli tajribalar yarataman.",
+        hero_cta: "Ishlarimni ko'ring", hero_contact_btn: "Bog'lanish",
+        about_title: 'Men Haqimda', about_heading: 'Men jozibali dasturchiman',
+        about_desc1: "Men toza, minimalistik va premium raqamli yechimlar yarataman. Toza dizayn va silliq foydalanuvchi tajribalariga e'tibor berib, g'oyalarni kod orqali hayotga keltiraman.",
+        about_desc2: "Zamonaviy web texnologiyalarida ixtisoslashganman. Kutishlarni oshadigan yuqori sifatli loyihalarni taqdim etaman.",
+        stat_exp: 'Yillik Tajriba', stat_projects: 'Loyihalar', stat_clients: 'Mijozlar',
+        skill_title: "Mening Ko'nikmalarim", skill_web: 'Web Dasturlash',
+        skill_web_desc: "Zamonaviy texnologiyalar yordamida tez va responsiv web saytlar yaratish.",
+        skill_uiux: 'UI/UX Dizayn', skill_uiux_desc: 'Intuitiv va chiroyli foydalanuvchi interfeyslar yaratish.',
+        skill_mobile: 'Telegram Bot', skill_mobile_desc: "Telegram uchun avtomatlashtirilgan va aqlli botlar yaratish.",
+        skill_perf: 'Ishlash', skill_perf_desc: 'Maksimal tezlik va samaradorlik uchun kodni optimallashtirish.',
+        portfolio_title: "Tanlangan Loyihalar",
+        service_title: 'Nima Qilaman',
+        service_web: 'Web Dasturlash', service_web_desc: "So'nggi texnologiyalar yordamida qurilgan maxsus web saytlar va ilovalar.",
+        service_uiux: 'UI/UX Dizayn', service_uiux_desc: "Funksionallik bilan birlashtirilgan foydalanuvchiga yo'niquvchi dizayn.",
+        service_consult: 'Konsalting', service_consult_desc: "Raqamli mahsulotlaringizni yaxshilash uchun texnik maslahat va ko'rsatmalar.",
+        contact_desc: "Loyiha bormi yoki hamkorlik qilmoqchimisiz? Aloqa qiling — birga ajoyib narsa yarataylik.",
+        contact_btn: "Men bilan bog'lanish",
+      }
+    };
+
+    let currentLang = 'en';
+    const langToggle = document.querySelector('.lang-toggle');
+
+    langToggle?.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'uz' : 'en';
+      updateLanguage();
+    });
+
+    function updateLanguage() {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        const key = el.getAttribute('data-lang');
+        if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+      });
+      langToggle.textContent = currentLang === 'en' ? 'EN | UZ' : 'UZ | EN';
+    }
+
+    // Navbar scroll
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      navbar?.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Mobile menu
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    menuToggle?.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+      menuToggle.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+    });
+    menuToggle?.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); menuToggle.click(); }
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Loader
+    const loader = document.querySelector('.loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => loader?.classList.add('hidden'), 900);
+    });
+  </script>
+</body>
+
+</html>
